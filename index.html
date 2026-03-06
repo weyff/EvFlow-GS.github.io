@@ -1,1 +1,359 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="Neuromorphic Vision, Spike Camera, Radiance Field.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpikeGS: Reconstruct 3D scene captured by a fast-moving bio-inspired camera</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+     
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SpikeGS: Reconstruct 3D scene captured by a fast-moving bio-inspired camera</h1>
+          
+
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Yijia Guo<sup>1*</sup>,</span>
+            <span class="author-block">
+              Liwen Hu<sup>1*</sup>,</span>
+            <span class="author-block">
+              Yuanxi Bai<sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Jiawei Yao<sup>3</sup>,
+            </span>
+            <span class="author-block">
+              Lei Ma<sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              Tiejun Huang<sup>1</sup>
+            </span>
+            <!-- <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+            </span> -->
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>State Key Laboratory of Multimedia Information Processing, School of Computer Science, Peking University</span>
+            <span class="author-block"><sup>2</sup>National Biomedical Imaging Center, Peking University</span>
+          </div>
+          
+
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2407.03771"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/yijiaguo02/SpikeGS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered ">
+        <h3 class="title is-3 ">Overview of SpikeGS</h3>
+      </div>
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="./static/gs_videos/v1.mp4"
+                  type="video/mp4">
+        </video>
+  
+      </div>
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="padding-left: 100px;padding-right: 100px;">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p style="font-size: 22px;" >
+            3D Gaussian Splatting (3DGS) has been proven to exhibit exceptional performance in reconstructing 3D scenes. However,
+            the effectiveness of 3DGS heavily relies on sharp images, and
+            fulfilling this requirement presents challenges in real-world
+            scenarios particularly when utilizing fast-moving cameras.
+            This limitation severely constrains the practical application of
+            3DGS and may compromise the feasibility of real-time reconstruction. To mitigate these challenges, we proposed Spike
+            Gaussian Splatting (SpikeGS), the first framework that integrates the Bayer-pattern spike streams into 3DGS pipeline to
+            reconstruct 3D scenes captured by a fast-moving high temporal color spike camera in one second. 
+            With accumulation rasterization, interval supervision, and a specially designed pipeline, 
+            SpikeGS realizes continuous spatiotemporal
+            perception and extracts detailed geometry and texture from
+            Bayer-pattern spike stream which is unstable and lacks details. 
+            Extensive experiments on multiple synthetic 
+            and real-world datasets demonstrate the superiority of SpikeGS 
+            compared with existing spike-based and deblur 3D scene reconstruction methods. 
+          </p>
+          
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      
+    <div class="columns is-centered ">
+      <!-- <h3 class="title is-3 ">Overview of SpikeGS</h3> -->
+    </div>
+    <div class="content has-text-centered">
+      <img src="./static/images/framework.png"
+        class="interpolation-image"
+        style="width: 100%; object-fit:cover;"
+      alt="Interpolate start reference image."/>
+    </div>
+
+    <div class="content has-text-justified">
+      <p style="font-size: 22px;">
+        We first reconstruct Bayer-pattern spike streams into spike intervals and spike accumulation. Unlike 3DGS, we adopt spike intervals to initialize SFM points, camera poses, and Gaussian
+        splats. We then embed the time accumulation process into the rasterizer to calibrate the colorization while maintaining multi-view
+        consistency. By progressively optimizing the 3DGS parameters using an accumulation loss and an interval loss, our method
+        facilitates high-quality 3DGS reconstruction.
+      </p>
+    </div>
+    
+    </div>
+  </div>
+</section>
+
+
+
+<!-- table -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+
+
+    <div class="columns is-centered has-text-centered">
+      <h3 class="title is-3 ">Comparison With Baselines</h3>
+    </div>
+    <div class="content has-text-centered" >
+      <img src="./static/images/baselinetable.png"
+        class="interpolation-image"
+        style="width: 100%; object-fit:cover;"
+      alt="Interpolate start reference image."/>
+    </div>
+    <!-- <div class="content has-text-justified">
+      <p>
+        Quantitative comparisons of novel view synthesis on synthetic datasets. The best and second-best performances are
+        respectively highlighted in bold and underscored with an underline. Our SpikeGS demonstrates the best NVS quality.
+      </p>
+    </div> -->
+
+    </div>
+  </div>
+</section>
+
+<!-- compare -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=eebceb06-5530-11ef-9396-d93975fe8866"></iframe>
+        </div>
+        <div class="item item-chair-tp">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=872f377c-5531-11ef-9396-d93975fe8866"></iframe>
+        </div>
+        <div class="item item-shiba">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=10f15e9a-5532-11ef-9396-d93975fe8866"></iframe>
+        </div>
+        <div class="item item-fullbody">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=eebceb06-5530-11ef-9396-d93975fe8866"></iframe>
+        </div>
+        <div class="item item-blueshirt">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=872f377c-5531-11ef-9396-d93975fe8866"></iframe>
+        </div>
+        <div class="item item-mask">
+          <iframe frameborder="0" class="juxtapose" width="100%" height="440" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=10f15e9a-5532-11ef-9396-d93975fe8866"></iframe>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Real-worldd results  -->
+<!-- is-light -->
+<section class="hero  is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <h3 class="title is-3 ">Real-world results</h3>
+      </div>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/0_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/3_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/6_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/9_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/12_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/15_output_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/gs_videos/18_output_video.mp4"
+                    type="video/mp4">
+          </video>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div class="content">
+
+          <p>
+            We thank the authors of 
+            <a href="https://github.com/nerfies/nerfies.github.io"></ahref>Nerfies</a> 
+            that kindly open sourced the template of this website.
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
